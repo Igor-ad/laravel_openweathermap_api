@@ -31,4 +31,14 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'google' => [
+        'client_id' => env('GOOGLE_CLIENT_ID'),
+        'client_secret' => env('GOOGLE_CLIENT_SECRET'),
+        'redirect' => env('GOOGLE_CLIENT_URL'),
+    ],
+
+    'open_weather' => [
+        'cache_time' => env('OPENWEATHER_CACHE_TIME', 600),
+    ],
+
 ];

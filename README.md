@@ -1,66 +1,76 @@
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+# Laravel OpenWeatherMap API
 
-## About Laravel
+### Команды от имени супер пользователя для инициализации приложения
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+В системе предварительно должны быть установлены необходимые компоненты,
+такие как composer, git, docker. Версия PHP >8.1
+```
+> mkdir /path_to_projects/laravel_openweathermap_api
+> cd /path_to_projects/laravel_openweathermap_api
+> git clone https://github.com/Igor-ad/laravel_openweathermap_api
+> cp ./.env.example ./.env
+```
+Необходимо заполнить параметры файла окружения ./.env соответствующими значениями:
+DB_PASSWORD, GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, GOOGLE_CLIENT_REDIRECT, OPENWEATHER_API_KEY,
+OPENWEATHER_CACHE_TIME
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Создать контейнера и запустить их. Обновить библиотеки и модули.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+```
+> composer update
+> chmod 777 -R ./storage/logs
+> docker-compose build 
+> docker-compose up 
+```
 
-## Learning Laravel
+После запуска домашня страница Laravel должна быть доступна по локальному адресу
+http://localhost/ .
+Если каталоги, в которые Laravel должен производить запись, 
+не доступны для записи от имени владельца,
+то подключение к домашней странице может вызвать ряд ошибок доступа.
+Следующие команды открывают доступ на запись "для всех" в соответствующие каталоги.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+```
+> chmod 755 -R ./public
+> chmod 755 ./.env
+> chmod 777 -R ./storage/framework/sessions
+> chmod 777 ./storage/framework/views
+> chmod 777 ./storage/framework/cache/data
+```
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+Выполняем команды миграции, генерации ключа приложения и подготовку библиотек.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+```
+> php artisan key:generate
+> php artisan migrate
+```
+Если команда миграции возвращает ошибку соединения с базой данных, 
+то следует заменить в файле окружения ./.env 
+значение параметра DB_HOST на IP адрес контейнера mysql.
+IP адрес mysql контейнера можно получить выполнив команду:
+```
+> docker inspect `docker ps|grep mysql|cut -d' ' -f1`|grep '"IPAddress": "1'|cut -d'"' -f4
+```
+и повторить команду миграции
 
-## Laravel Sponsors
+```
+> php artisan migrate
+```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+Если тестирование проводить на иной машине в локальной сети, 
+соединение с контейнером Redis может не произойти.
+В таком случае следует заменить в файле окружения ./.env
+значение параметра REDIS_HOST на IP адрес контейнера redis.
+IP адрес redis контейнера можно получить выполнив команду:
 
-### Premium Partners
+```
+> docker inspect `docker ps|grep redis|cut -d' ' -f1`|grep '"IPAddress": "1'|cut -d'"' -f4
+```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+Для тестирования приложения в локальной сети истользуется IP адрес DNS Google.
+Чтобы использовать реальную геолокацию с реальным IP адресом 
+следует раскоментировать 23 строчку в файле
+App\Http\Controllers\AbstractWeatherController
 
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).

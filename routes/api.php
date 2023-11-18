@@ -1,6 +1,9 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Enums\ProviderEnum;
+use App\Http\Controllers\Api\UserCreateController;
+use App\Http\Controllers\Api\UserLoginController;
+use App\Http\Controllers\WeatherController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,6 +17,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::get('/home', [WeatherController::class, 'getWeather'])
+    ->middleware('auth:api')
+    ->name('api.home');
+
+Route::post('/login', UserLoginController::class)->name('api.login');
+Route::post('/register/{provider}', [UserCreateController::class, 'provider'])
+    ->whereIn('provider', ProviderEnum::toArray())->name('api.register');
+Route::get('/google/redirect', [UserCreateController::class, 'google'])->name('google.api.redirect');
+Route::get('/google/callback', [UserCreateController::class, 'googleCallback'])->name('google.api.callback');
