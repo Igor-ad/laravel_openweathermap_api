@@ -13,7 +13,7 @@
 > cp ./.env.example ./.env
 ```
 Необходимо заполнить параметры файла окружения ./.env соответствующими значениями:
-DB_PASSWORD, GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, GOOGLE_CLIENT_REDIRECT, OPENWEATHER_API_KEY,
+DB_PASSWORD, GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, GOOGLE_CLIENT_URL, OPENWEATHER_API_KEY,
 OPENWEATHER_CACHE_TIME
 
 Создать контейнера и запустить их. Обновить библиотеки и модули.
