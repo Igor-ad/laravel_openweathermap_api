@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('profile')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password')->nullable();
-            $table->integer('provider_id')->nullable();
+            $table->string('provider_id')->nullable();
             $table->string('api_token')->nullable();
             $table->boolean('status')->default(true);
             $table->rememberToken();
