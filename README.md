@@ -7,9 +7,9 @@
 В системе предварительно должны быть установлены необходимые компоненты,
 такие как composer, git, docker. Версия PHP >8.1
 ```
-> mkdir /path_to_projects/laravel_openweathermap_api
-> cd /path_to_projects/laravel_openweathermap_api
+> cd /path_to_projects
 > git clone https://github.com/Igor-ad/laravel_openweathermap_api.git
+> cd /path_to_projects/laravel_openweathermap_api
 > cp ./.env.example ./.env
 ```
 Необходимо заполнить параметры файла окружения ./.env соответствующими значениями:
