@@ -74,3 +74,9 @@ IP адрес redis контейнера можно получить выпол�
 следует раскоментировать 23 строчку в файле
 App\Http\Controllers\AbstractWeatherController
 
+##### Examples of web pages
+
+![image](public/img/login.png)
+![image](public/img/registration.png)
+![image](public/img/auth.png)
+![image](public/img/home.png)
