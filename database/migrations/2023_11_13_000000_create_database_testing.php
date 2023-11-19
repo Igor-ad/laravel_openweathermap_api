@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::dropDatabaseIfExists('testing');
         Schema::createDatabase('testing');
+        DB::statement("CREATE TABLE `testing`.`personal_access_tokens` LIKE `laravel`.`personal_access_tokens`");
         DB::statement("CREATE TABLE `testing`.`users` LIKE `laravel`.`users`");
     }
 
