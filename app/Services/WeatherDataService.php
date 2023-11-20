@@ -4,24 +4,29 @@ declare(strict_types=1);
 
 namespace App\Services;
 
+use App\Repositories\WeatherCacheRepository;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Cache;
 
 class WeatherDataService
 {
+
+    public function __construct(
+        protected WeatherCacheRepository $repository
+    )
+    {
+    }
+
     public function getForecast(string $lat, string $lon): ?Collection
     {
-        $forecast = Cache::store('redis')->get($this->setKey($lat, $lon));
+        $key = $this->setKey($lat, $lon);
+
+        $forecast = $this->repository->get($key);
 
         if (!$forecast) {
             $forecast = $this->currentByCord($lat, $lon);
 
-            Cache::store('redis')->put(
-                $this->setKey($lat, $lon),
-                $forecast,
-                config('services.open_weather.cache_time'),
-            );
+            $this->repository->set($key, $forecast, (int)config('services.open_weather.cache_time'));
         }
         return $forecast;
     }
