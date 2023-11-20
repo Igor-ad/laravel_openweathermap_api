@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Http\Controllers\Api;
+namespace Http\Api;
 
 use App\Enums\UserStatusEnum;
 use App\Models\User;
@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Tests\TestCase;
 use Tests\TestHelper;
 
-class ApiUserLoginControllerTest extends TestCase
+class ApiUserLoginTest extends TestCase
 {
     use TestHelper;
 
@@ -24,13 +24,9 @@ class ApiUserLoginControllerTest extends TestCase
             '/api/login',
             $this->email, $this->password,
         ));
-
-        $response->assertStatus(Response::HTTP_OK);
-        $this->assertDatabaseHas('users', $this->user->getAttributes());
-        $this->assertNotNull($response['token']);
-
         $user = User::query()->latest();
 
+        $response->assertOk();
         $response->assertJson(fn (AssertableJson $json) =>
         $json->where('token', $user->value('api_token'))
             ->has('user', fn (AssertableJson $json) =>

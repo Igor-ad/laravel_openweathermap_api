@@ -21,7 +21,7 @@ class WeatherControllerTest extends TestCase
         $response = $this->actingAs($this->user, 'web')
             ->get('/home');
 
-        $user = User::query()->latest();
+        $user = User::where('email', $this->email)->first();
 
         $response->assertStatus(200);
 
@@ -30,11 +30,11 @@ class WeatherControllerTest extends TestCase
             $json
                 ->has('user', fn(AssertableJson $json) =>
                 $json
-                    ->where('id', $user->value('id'))
-                    ->where('first_name', $user->value('first_name'))
-                    ->where('last_name', $user->value('last_name'))
+                    ->where('id', $user->getAttribute('id'))
+                    ->where('first_name', $user->getAttribute('first_name'))
+                    ->where('last_name', $user->getAttribute('last_name'))
                     ->where('email', $this->email)
-                    ->where('profile', $user->value('profile'))
+                    ->where('profile', $user->getAttribute('profile'))
                     ->where('status', UserStatusEnum::TRUE->value)
                     ->has('created_at')
                     ->has('updated_at')

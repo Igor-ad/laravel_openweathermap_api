@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Http\Controllers\Web;
+namespace Http\Web;
 
 use Tests\TestCase;
 use Tests\TestHelper;
 
-class UserLoginControllerTest extends TestCase
+class WebUserLoginTest extends TestCase
 {
     use TestHelper;
 

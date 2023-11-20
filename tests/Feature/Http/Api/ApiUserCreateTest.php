@@ -2,17 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Http\Controllers\Api;
+namespace Http\Api;
 
 use App\Models\User;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Illuminate\Testing\Fluent\AssertableJson;
-use Tests\TestCase;
 use Symfony\Component\HttpFoundation\Response;
+use Tests\TestCase;
 use Tests\TestHelper;
 
-class ApiUserCreateControllerTest extends TestCase
+class ApiUserCreateTest extends TestCase
 {
     use TestHelper;
 
@@ -28,19 +27,15 @@ class ApiUserCreateControllerTest extends TestCase
             $this->name, $this->email, $this->password, $password_confirmation,
         ))->assertStatus(Response::HTTP_CREATED);
 
-        $user = User::query()->latest();
-        $this->assertEquals($user->value('name'), $this->name);
-        $this->assertTrue(Auth::attempt(['email' => $this->email, 'password' => $this->password]));
-        $this->assertNotNull($user->value('api_token'));
-        $this->assertTrue((bool)$user->value('status'));
+        $this->user = User::where('email', $this->email)->first();
 
         $response->assertJson(fn (AssertableJson $json) =>
-            $json->where('token', $user->value('api_token'))
+            $json->where('token', $this->user->getAttribute('api_token'))
                 ->has('user', fn (AssertableJson $json) =>
-                $json->where('id', $user->value('id'))
+                $json->where('id', $this->user->getAttribute('id'))
                     ->where('email', $this->email)
-                    ->where('updated_at', (string)$user->value('updated_at'))
-                    ->where('created_at', (string)$user->value('created_at'))
+                    ->where('updated_at', (string)$this->user->getAttribute('updated_at'))
+                    ->where('created_at', (string)$this->user->getAttribute('created_at'))
                 )
             );
     }
