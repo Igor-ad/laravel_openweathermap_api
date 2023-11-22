@@ -1,7 +1,7 @@
 <?php
 
 use App\Enums\ProviderEnum;
-use App\Http\Controllers\WeatherController;
+use App\Http\Controllers\Web\WeatherController;
 use App\Http\Controllers\Web\UserCreateController;
 use App\Http\Controllers\Web\UserLoginController;
 use Illuminate\Support\Facades\Route;

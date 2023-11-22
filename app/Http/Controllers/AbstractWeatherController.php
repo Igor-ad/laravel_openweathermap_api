@@ -7,6 +7,7 @@ namespace App\Http\Controllers;
 use App\Services\WeatherDataService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
 use MakiDizajnerica\GeoLocation\Facades\GeoLocation;
 
 abstract class AbstractWeatherController extends Controller
@@ -25,6 +26,18 @@ abstract class AbstractWeatherController extends Controller
         return $this->service->getForecast(
             (string)$location->get('latitude'),
             (string)$location->get('longitude'),
+        );
+    }
+
+    public function getForecast(Request $request): Collection
+    {
+        $forecast = $this->getCurrentForecast($request);
+        $user = Auth::user();
+
+        return collect()
+            ->put('user', $user)
+            ->put('main', collect($forecast->get('main'))
+                ->only(['temp', 'pressure', 'humidity', 'temp_max', 'temp_min'])
         );
     }
 

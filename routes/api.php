@@ -3,7 +3,7 @@
 use App\Enums\ProviderEnum;
 use App\Http\Controllers\Api\UserCreateController;
 use App\Http\Controllers\Api\UserLoginController;
-use App\Http\Controllers\WeatherController;
+use App\Http\Controllers\Api\WeatherController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/home', [WeatherController::class, 'getWeather'])
-    ->middleware('auth:api')
+    ->middleware(['auth:api'])
     ->name('api.home');
 
 Route::post('/login', UserLoginController::class)->name('api.login');

@@ -2,6 +2,7 @@
 
 return [
     'create_new_user' => 'Save new user',
+    'current_forecast' => 'Current forecast',
     'login' => 'Login page',
     'login_with_google' => 'Login with Google',
     'footer' => 'End content',
