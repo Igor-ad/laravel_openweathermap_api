@@ -49,6 +49,7 @@ http://localhost/ .
 Если команда миграции возвращает ошибку соединения с базой данных, 
 то следует заменить в файле окружения ./.env 
 значение параметра DB_HOST на IP адрес контейнера mysql.
+(Ошибка соединения с базой скрорее может проявиться на этапе тестирования.)
 IP адрес mysql контейнера можно получить выполнив команду:
 ```
 > docker inspect `docker ps|grep mysql|cut -d' ' -f1`|grep '"IPAddress": "1'|cut -d'"' -f4
@@ -79,4 +80,5 @@ App\Http\Controllers\AbstractWeatherController
 ![image](public/img/login.png)
 ![image](public/img/registration.png)
 ![image](public/img/auth.png)
+![image](public/img/web_home.png)
 ![image](public/img/home.png)
