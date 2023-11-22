@@ -19,8 +19,6 @@ class WeatherControllerTest extends TestCase
         $view = $this->actingAs($this->user, 'web')
             ->get(route('web.home'))->assertOk();
 
-//        $user = User::where('email', $this->email)->first();
-
         $view->assertSee( __('web.current_forecast'));
         $view->assertSee(  $this->user->getAttribute('id'));
         $view->assertSee(  $this->user->getAttribute('email'));
