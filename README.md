@@ -2,10 +2,14 @@
 
 # Laravel OpenWeatherMap API
 
+The application built without Laravel Sail.
+
 ### Команды от имени супер пользователя для инициализации приложения
 
 В системе предварительно должны быть установлены необходимые компоненты,
-такие как composer, git, docker. Версия PHP >8.1
+такие как composer, git, docker. Версия PHP >8.1.
+Sail удален полностью из приложения и зависимостей composer.
+
 ```
 > cd /path_to_projects
 > git clone https://github.com/Igor-ad/laravel_openweathermap_api.git
@@ -46,14 +50,17 @@ http://localhost/ .
 > php artisan key:generate
 > php artisan migrate
 ```
+
 Если команда миграции возвращает ошибку соединения с базой данных, 
 то следует заменить в файле окружения ./.env 
 значение параметра DB_HOST на IP адрес контейнера mysql.
 (Ошибка соединения с базой скорее может проявиться на этапе тестирования.)
 IP адрес mysql контейнера можно получить выполнив команду:
+
 ```
 > docker inspect `docker ps|grep mysql|cut -d' ' -f1`|grep '"IPAddress": "1'|cut -d'"' -f4
 ```
+
 и повторить команду миграции
 
 ```
