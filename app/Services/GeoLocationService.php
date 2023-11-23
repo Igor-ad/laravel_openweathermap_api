@@ -18,11 +18,11 @@ class GeoLocationService
 
     protected function validateGlobalIpAddress(): string
     {
-        if ((filter_var(request()->ip(), FILTER_VALIDATE_IP, FILTER_FLAG_NO_RES_RANGE))
-            && (filter_var(request()->ip(), FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE))) {
-            return request()->ip();
-        } else {
-            return self::GOOGLE_DNS;
-        }
+        return filter_var(
+            request()->ip(),
+            FILTER_VALIDATE_IP,
+            FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE
+        )
+            ? request()->ip() : self::GOOGLE_DNS;
     }
 }
