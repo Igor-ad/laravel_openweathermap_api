@@ -6,7 +6,6 @@ namespace App\Http\Controllers;
 
 use App\Services\GeoLocationService;
 use App\Services\WeatherDataService;
-use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 
@@ -39,5 +38,5 @@ abstract class AbstractWeatherController extends Controller
         );
     }
 
-    abstract public function getWeather(Request $request);
+    abstract public function getWeather();
 }

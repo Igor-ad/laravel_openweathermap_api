@@ -5,14 +5,13 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\AbstractWeatherController;
-use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class WeatherController extends AbstractWeatherController
 {
-    public function getWeather(Request $request): View
+    public function getWeather(): View
     {
-        $data = json_encode($this->getForecast($request),JSON_PRETTY_PRINT);
+        $data = json_encode($this->getForecast(),JSON_PRETTY_PRINT);
 
         return view('weather.current_forecast', compact('data'));
     }
