@@ -26,16 +26,14 @@ class UserCreateController extends AuthController
     {
         $googleUser = Socialite::driver(Provider::GOOGLE->value)->stateless()->user();
         $user = $this->login($googleUser);
-        $token = $this->tokenUpdate($user);
 
-        return $this->response($user, $token, Response::HTTP_CREATED);
+        return $this->authResponse($user, Response::HTTP_CREATED);
     }
 
     public function users(UserCreateRequest $request): JsonResponse
     {
         $user = $this->store($request->validated());
-        $token = $this->tokenUpdate($user);
 
-        return $this->response($user, $token, Response::HTTP_CREATED);
+        return $this->authResponse($user, Response::HTTP_CREATED);
     }
 }

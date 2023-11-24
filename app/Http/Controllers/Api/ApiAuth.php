@@ -21,11 +21,11 @@ trait ApiAuth
         return $token;
     }
 
-    protected function response(?User $user, string $token, int $status): JsonResponse
+    protected function authResponse(?User $user, int $status): JsonResponse
     {
         return $this->collectionResponse([
             'user' => $user,
-            'token' => $token
+            'token' => $this->tokenUpdate($user),
         ],
             $status
         );

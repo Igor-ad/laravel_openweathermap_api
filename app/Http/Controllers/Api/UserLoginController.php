@@ -18,9 +18,8 @@ class UserLoginController extends Controller
     {
         if (Auth::attempt($request->validated())) {
             $user = Auth::user();
-            $token = $this->tokenUpdate($user);
 
-            return $this->response($user, $token, Response::HTTP_OK);
+            return $this->authResponse($user, Response::HTTP_OK);
         }
         return response()->json(
             ['error' => 'Login failure'],
