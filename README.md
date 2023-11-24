@@ -87,6 +87,6 @@ IP адрес redis контейнера можно получить выпол�
 ![image](public/img/auth.png)
 ![image](public/img/web_home.png)
 
-##### Example JSON API response
+##### Example API JSON response
 
 ![image](public/img/home.png)
