@@ -11,6 +11,7 @@ use Illuminate\Http\JsonResponse;
 trait ApiAuth
 {
     use ResponseTrait;
+
     protected function tokenUpdate(?User $user): string
     {
         $token = $user->createToken('api_token')->plainTextToken;

@@ -20,9 +20,7 @@ class UserLoginController extends Controller
 
     public function login(UserLoginRequest $request): RedirectResponse
     {
-        $validate = $request->validated();
-
-        if (Auth::attempt($validate)) {
+        if (Auth::attempt($request->validated())) {
             $request->session()->regenerate();
 
             return redirect(route('web.home'));

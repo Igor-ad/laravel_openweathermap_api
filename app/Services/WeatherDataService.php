@@ -4,15 +4,14 @@ declare(strict_types=1);
 
 namespace App\Services;
 
-use App\Repositories\WeatherCacheRepository;
+use App\Repositories\CacheRepository;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 
 class WeatherDataService
 {
-
     public function __construct(
-        protected WeatherCacheRepository $repository
+        protected CacheRepository $repository
     )
     {
     }

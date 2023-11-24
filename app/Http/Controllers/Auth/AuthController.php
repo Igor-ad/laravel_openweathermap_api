@@ -5,35 +5,25 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\UserCreateRequest;
+use Laravel\Socialite\Contracts\User as SocUser;
 use App\Models\User;
-use Illuminate\Support\Facades\Hash;
+use App\Repositories\UserRepository;
 
 class AuthController extends Controller
 {
-    public function store(UserCreateRequest $request): ?User
+    public function __construct(
+        protected UserRepository $userRepository,
+    )
     {
-        return User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
     }
 
-    protected function login($oauth): ?User
+    protected function store(array $validData): ?User
     {
-        return User::updateOrCreate(
-            [
-                'email' => $oauth->email,
-            ],
-            [
-                'name' => $oauth->name,
-                'first_name' => $oauth->user['given_name'],
-                'last_name' => $oauth->user['family_name'],
-                'email' => $oauth->email,
-                'provider_id' => $oauth->id,
-                'profile' => $oauth->avatar,
-            ]
-        );
+        return $this->userRepository->create($validData);
+    }
+
+    protected function login(SocUser $socUser): ?User
+    {
+        return $this->userRepository->updateOrCreate($socUser);
     }
 }

@@ -37,7 +37,7 @@ class UserCreateController extends AuthController
 
     public function users(UserCreateRequest $request): RedirectResponse
     {
-        $user = $this->store($request);
+        $user = $this->store($request->validated());
         Auth::login($user);
 
         return redirect()->route('web.home');

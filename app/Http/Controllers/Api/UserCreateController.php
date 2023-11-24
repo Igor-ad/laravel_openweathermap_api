@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Api;
 
-use App\Enums\ProviderEnum;
+use App\Enums\ProviderEnum as Provider;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Requests\UserCreateRequest;
 use App\Services\AuthService;
@@ -19,12 +19,12 @@ class UserCreateController extends AuthController
 
     public function google(): RedirectResponse
     {
-        return Socialite::driver(ProviderEnum::GOOGLE->value)->stateless()->redirect();
+        return Socialite::driver(Provider::GOOGLE->value)->stateless()->redirect();
     }
 
     public function googleCallback(): JsonResponse
     {
-        $googleUser = Socialite::driver(ProviderEnum::GOOGLE->value)->stateless()->user();
+        $googleUser = Socialite::driver(Provider::GOOGLE->value)->stateless()->user();
         $user = $this->login($googleUser);
         $token = $this->tokenUpdate($user);
 
@@ -33,7 +33,7 @@ class UserCreateController extends AuthController
 
     public function users(UserCreateRequest $request): JsonResponse
     {
-        $user = $this->store($request);
+        $user = $this->store($request->validated());
         $token = $this->tokenUpdate($user);
 
         return $this->response($user, $token, Response::HTTP_CREATED);
