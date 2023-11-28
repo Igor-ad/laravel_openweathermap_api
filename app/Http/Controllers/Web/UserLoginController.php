@@ -13,6 +13,10 @@ use Illuminate\View\View;
 
 class UserLoginController extends Controller
 {
+    public function welcome(): View
+    {
+        return view('welcome');
+    }
     public function loginView(): View
     {
         return view('users.user_soc_login');

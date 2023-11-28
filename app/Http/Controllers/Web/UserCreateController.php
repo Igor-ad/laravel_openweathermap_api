@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Web;
 
-use App\Http\Controllers\Auth\AuthController;
+use App\Enums\ProviderEnum as Provider;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\UserCreateRequest;
 use App\Services\AuthService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
-use Laravel\Socialite\Facades\Socialite;
 
-class UserCreateController extends AuthController
+class UserCreateController extends Controller
 {
     use AuthService;
 
@@ -23,13 +23,13 @@ class UserCreateController extends AuthController
 
     public function google(): RedirectResponse
     {
-        return Socialite::driver('google')->redirect();
+        return $this->redirectProvider(Provider::GOOGLE->value, false);
     }
 
     public function googleCallback(): RedirectResponse
     {
-        $googleUser = Socialite::driver('google')->user();
-        $user = $this->login($googleUser);
+        $socUser = $this->callbackProvider(Provider::GOOGLE->value, false);
+        $user = $this->login($socUser);
         Auth::login($user);
 
         return redirect()->route('web.home');

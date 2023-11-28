@@ -23,8 +23,7 @@ abstract class AbstractWeatherController extends Controller
     public function getCurrentForecast(): ?Collection
     {
         return $this->weather->getForecast(
-            (string)$this->location->getGeoLocation()->get('latitude'),
-            (string)$this->location->getGeoLocation()->get('longitude'),
+            (string)$this->location->getGeoLocation()->get('city')
         );
     }
 
