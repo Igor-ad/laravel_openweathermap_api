@@ -35,12 +35,9 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $hidden = [
-        'name',
-        'email_verified_at',
         'password',
         'remember_token',
         'api_token',
-        'provider_id',
     ];
 
     /**
@@ -53,6 +50,11 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
+    /**
+     *  Accessor for the 'status' attribute.
+     *
+     * @return Attribute
+     */
     protected function status(): Attribute
     {
         return Attribute::make(

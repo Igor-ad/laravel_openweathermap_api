@@ -12,7 +12,7 @@ trait ApiAuth
 {
     use ResponseTrait;
 
-    protected function tokenUpdate(?User $user): string
+    protected function updateToken(?User $user): string
     {
         $token = $user->createToken('api_token')->plainTextToken;
         $user->timestamps = false;
@@ -25,7 +25,7 @@ trait ApiAuth
     {
         return $this->collectionResponse([
             'user' => $user,
-            'token' => $this->tokenUpdate($user),
+            'token' => $this->updateToken($user),
         ],
             $status
         );

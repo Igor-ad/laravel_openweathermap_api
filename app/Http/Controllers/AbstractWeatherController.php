@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\UserResource;
+use App\Http\Resources\WeatherResource;
 use App\Services\GeoLocationService;
 use App\Services\WeatherDataService;
 use Illuminate\Support\Collection;
@@ -26,16 +28,15 @@ abstract class AbstractWeatherController extends Controller
         );
     }
 
-    public function getForecast(): Collection
+    public function getForecast(): array
     {
-        $forecast = $this->getCurrentForecast();
+        $forecast = $this->getCurrentForecast()->get('main');
         $user = Auth::user();
 
-        return collect()
-            ->put('user', $user)
-            ->put('main', collect($forecast->get('main'))
-                ->only(['temp', 'pressure', 'humidity', 'temp_max', 'temp_min'])
-        );
+        return [
+            'user' => new UserResource($user),
+            'main' => new WeatherResource($forecast),
+        ];
     }
 
     abstract public function getWeather();

@@ -6,7 +6,6 @@ namespace App\Services;
 
 use App\Repositories\CacheRepository;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Auth;
 
 class WeatherDataService
 {
@@ -16,27 +15,27 @@ class WeatherDataService
     {
     }
 
-    public function getForecast(string $lat, string $lon): ?Collection
+    public function getForecast(string $city): ?Collection
     {
-        $key = $this->setKey($lat, $lon);
+        $key = $this->setKey($city);
 
         $forecast = $this->repository->get($key);
 
         if (!$forecast) {
-            $forecast = $this->currentByCord($lat, $lon);
+            $forecast = $this->currentByCity($city);
 
             $this->repository->set($key, $forecast, (int)config('services.open_weather.cache_time'));
         }
         return $forecast;
     }
 
-    private function setKey(string $lat, string $lon): string
+    private function setKey(string $city): string
     {
-        return sprintf("%s%s%s_current", Auth::id(), $lat, $lon);
+        return sprintf("%s_current", $city);
     }
 
-    protected function currentByCord(string $lat, string $lon): ?Collection
+    protected function currentByCity(string $city): ?Collection
     {
-        return collect(WeatherFactory::create()->getCurrentByCord($lat, $lon));
+        return collect(WeatherFactory::create()->getCurrentByCity($city));
     }
 }

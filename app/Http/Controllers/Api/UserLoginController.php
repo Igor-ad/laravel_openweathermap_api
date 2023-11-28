@@ -22,7 +22,7 @@ class UserLoginController extends Controller
             return $this->authResponse($user, Response::HTTP_OK);
         }
         return response()->json(
-            ['error' => 'Login failure'],
+            ['error' => __('api.error.auth_fail')],
             Response::HTTP_UNAUTHORIZED,
         );
     }

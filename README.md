@@ -4,11 +4,11 @@
 
 The application built without Laravel Sail.
 
-### Команды от имени супер пользователя для инициализации приложения
+### Commands as superuser to initialize the application
 
-В системе предварительно должны быть установлены необходимые компоненты,
-такие как composer, git, docker. Версия PHP >8.1.
-Sail удален полностью из приложения и зависимостей composer.
+The system must first have the necessary components installed,
+such as composer, git, docker. PHP version >8.1.
+Sail has been removed completely from composer applications and dependencies.
 
 ```
 > cd /path_to_projects
@@ -16,11 +16,12 @@ Sail удален полностью из приложения и зависим
 > cd /path_to_projects/laravel_openweathermap_api
 > cp ./.env.example ./.env
 ```
-Необходимо заполнить параметры файла окружения ./.env соответствующими значениями:
+
+It is necessary to fill in the parameters of the environment file ./.env with the following values:
 DB_PASSWORD, GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, GOOGLE_CLIENT_URL, OPENWEATHER_API_KEY,
 OPENWEATHER_CACHE_TIME
 
-Создать контейнера и запустить их. Обновить библиотеки и модули.
+Update libraries and modules. Create and run a containers.
 
 ```
 > composer update
@@ -29,13 +30,11 @@ OPENWEATHER_CACHE_TIME
 > docker-compose up 
 ```
 
-После запуска домашня страница Laravel должна быть доступна по локальному адресу
-http://localhost/ .
-Если каталоги, в которые Laravel должен производить запись, 
-не доступны для записи от имени владельца,
-то подключение к домашней странице может вызвать ряд ошибок доступа.
-Следующие команды открывают доступ на запись "для всех" в соответствующие каталоги.
-
+The Laravel home page must be accessible from a local address
+http://localhost/.
+If the directories that Laravel should write to are not writable on behalf of the owner, 
+connecting to the home page may cause a number of access errors.
+The following commands will open "public" entry access to the appropriate directories.
 ```
 > chmod 755 -R ./public
 > chmod 755 ./.env
@@ -44,40 +43,39 @@ http://localhost/ .
 > chmod 777 ./storage/framework/cache/data
 ```
 
-Выполняем команды миграции, генерации ключа приложения и подготовку библиотек.
+Generate the application key and run the migration commands.
 
 ```
 > php artisan key:generate
 > php artisan migrate
 ```
 
-Если команда миграции возвращает ошибку соединения с базой данных, 
-то следует заменить в файле окружения ./.env 
-значение параметра DB_HOST на IP адрес контейнера mysql.
-(Ошибка соединения с базой скорее может проявиться на этапе тестирования.)
-IP адрес mysql контейнера можно получить выполнив команду:
-
+If the migration command returns a database connection error,
+then you should replace in the environment file ./.env
+the value of the DB_HOST parameter to the IP address of the MySQL container.
+(Database connection error may appear during the testing phase)
+The IP address of the MySQL container can be obtained by running the command:
 ```
 > docker inspect `docker ps|grep mysql|cut -d' ' -f1`|grep '"IPAddress": "1'|cut -d'"' -f4
 ```
 
-и повторить команду миграции
+and repeat the migration command
 
 ```
 > php artisan migrate
 ```
 
-Если тестирование проводить на иной машине в локальной сети, 
-соединение с контейнером Redis может не произойти.
-В таком случае следует заменить в файле окружения ./.env
-значение параметра REDIS_HOST на IP адрес контейнера redis.
-IP адрес redis контейнера можно получить выполнив команду:
+If testing is carried out on another machine on the local network,
+connection to the Redis container may fail.
+In this case, you should replace ./.env in the environment file
+the value of the REDIS_HOST parameter to the IP address of the redis container.
+The IP address of the redis container can be obtained by running the command:
 
 ```
 > docker inspect `docker ps|grep redis|cut -d' ' -f1`|grep '"IPAddress": "1'|cut -d'"' -f4
 ```
 
-Для тестирования приложения в локальной сети истользуется IP адрес DNS Google.
+To test the application on the local network, the Google DNS IP address is used.
 
 ##### Examples of web pages
 

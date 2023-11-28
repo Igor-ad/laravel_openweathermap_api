@@ -17,9 +17,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [UserLoginController::class, 'welcome'])->name('web.welcome');
 
 Route::get('/home', [WeatherController::class, 'getWeather'])
     ->middleware(['auth'])
