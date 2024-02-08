@@ -4,12 +4,10 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\UserResource;
-use App\Http\Resources\WeatherResource;
+use App\Http\Resources\ForecastResource;
 use App\Services\GeoLocationService;
 use App\Services\WeatherDataService;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Auth;
 
 abstract class AbstractWeatherController extends Controller
 {
@@ -27,15 +25,9 @@ abstract class AbstractWeatherController extends Controller
         );
     }
 
-    public function getForecast(): array
+    public function getForecast(): Collection
     {
-        $forecast = $this->getCurrentForecast()->get('main');
-        $user = Auth::user();
-
-        return [
-            'user' => new UserResource($user),
-            'main' => new WeatherResource($forecast),
-        ];
+        return collect(ForecastResource::make($this->getCurrentForecast()->get('main')));
     }
 
     abstract public function getWeather();
