@@ -18,6 +18,8 @@ abstract class AbstractWeatherController extends Controller
     {
     }
 
+    abstract public function getWeather();
+
     public function getCurrentForecast(): ?Collection
     {
         return $this->weather->getForecast(
@@ -25,10 +27,10 @@ abstract class AbstractWeatherController extends Controller
         );
     }
 
-    public function getForecast(): Collection
+    public function getUserForecast(): Collection
     {
-        return collect(ForecastResource::make($this->getCurrentForecast()->get('main')));
+        return collect(ForecastResource::make(
+            $this->getCurrentForecast()->get('main')
+        ));
     }
-
-    abstract public function getWeather();
 }

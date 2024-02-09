@@ -14,6 +14,6 @@ class WeatherController extends AbstractWeatherController
 
     public function getWeather(): JsonResponse
     {
-        return $this->collectionResponse($this->getForecast());
+        return $this->collectionResponse($this->getUserForecast());
     }
 }
