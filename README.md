@@ -87,4 +87,24 @@ To test the application on the local network, the Google DNS IP address is used.
 
 ##### Example API JSON response
 
-![image](public/img/home.png)
+```
+{
+    "user": {
+        "id": 1,
+        "first_name": null,
+        "last_name": null,
+        "email": "admin@mail.com",
+        "profile": null,
+        "status": "Active",
+        "created_at": "2023-11-18T15:28:38.000000Z",
+        "updated_at": "2023-11-18T15:28:38.000000Z"
+    },
+    "main": {
+        "temp": 5.61,
+        "pressure": 1018,
+        "humidity": 88,
+        "temp_min": 3.6,
+        "temp_max": 7.9
+    }
+}
+```
