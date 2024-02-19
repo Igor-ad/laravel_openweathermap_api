@@ -6,7 +6,6 @@ namespace App\Repositories;
 
 use Laravel\Socialite\Contracts\User as SocUser;
 use App\Models\User;
-use Illuminate\Support\Facades\Hash;
 
 class UserRepository
 {
@@ -15,7 +14,7 @@ class UserRepository
         return User::create([
             'name' => $validData['name'],
             'email' => $validData['email'],
-            'password' => Hash::make($validData['password']),
+            'password' => $validData['password'],
         ]);
     }
 
