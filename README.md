@@ -108,3 +108,8 @@ To test the application on the local network, the Google DNS IP address is used.
     }
 }
 ```
+
+Used hashed token authentication in Sanctum.
+
+When making requests using API tokens, 
+the token should be included in the Authorization header as a Bearer token.

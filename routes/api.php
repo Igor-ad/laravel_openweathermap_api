@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/home', [WeatherController::class, 'getWeather'])
-    ->middleware(['auth:api'])
+    ->middleware(['auth:sanctum'])
     ->name('api.home');
 
 Route::post('/login', UserLoginController::class)->name('api.login');

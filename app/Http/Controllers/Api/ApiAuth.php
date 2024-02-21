@@ -14,11 +14,7 @@ trait ApiAuth
 
     protected function updateToken(?User $user): string
     {
-        $token = $user->createToken('api_token')->plainTextToken;
-        $user->timestamps = false;
-        $user->update(['api_token' => $token]);
-
-        return $token;
+        return $user->createToken('api_token')->plainTextToken;
     }
 
     protected function authResponse(?User $user, int $status): JsonResponse
