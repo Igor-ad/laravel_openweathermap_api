@@ -14,7 +14,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 class UserCreateController extends Controller
 {
-    use AuthService, ApiAuth;
+    use AuthService;
+    use ApiAuth;
 
     public function google(): RedirectResponse
     {

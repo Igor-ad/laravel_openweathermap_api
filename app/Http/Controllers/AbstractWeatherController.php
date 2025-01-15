@@ -14,8 +14,7 @@ abstract class AbstractWeatherController extends Controller
     public function __construct(
         protected WeatherDataService $weather,
         protected GeoLocationService $location,
-    )
-    {
+    ) {
     }
 
     abstract public function getWeather();

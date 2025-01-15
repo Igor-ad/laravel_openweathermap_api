@@ -22,7 +22,8 @@ class ApiUserLoginTest extends TestCase
         $response = $this->post(sprintf(
             '%s?email=%s&password=%s',
             '/api/login',
-            $this->email, $this->password,
+            $this->email,
+            $this->password,
         ));
         $user = User::query()->latest();
 
@@ -38,8 +39,7 @@ class ApiUserLoginTest extends TestCase
                 ->where('status', UserStatusEnum::TRUE->value)
                 ->where('updated_at', (string)$user->value('updated_at'))
                 ->where('created_at', (string)$user->value('created_at'))
-            )
-        );
+                ->etc()));
     }
 
     public function testFailLoginUser(): void
@@ -49,7 +49,8 @@ class ApiUserLoginTest extends TestCase
         $response = $this->post(sprintf(
             '%s?email=%s&password=%s',
             '/api/login',
-            $this->email, '**********',
+            $this->email,
+            '**********',
         ));
 
         $response->assertStatus(Response::HTTP_UNAUTHORIZED);

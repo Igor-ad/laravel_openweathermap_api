@@ -21,7 +21,9 @@ enum ProviderEnum: string
 
     public static function check(string $provider): ?string
     {
-        if (self::has($provider)) return $provider;
+        if (self::has($provider)) {
+            return $provider;
+        }
 
         return null;
     }

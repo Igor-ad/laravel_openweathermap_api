@@ -16,8 +16,7 @@ trait AuthService
 {
     public function __construct(
         protected UserRepository $userRepository,
-    )
-    {
+    ) {
     }
 
     protected function store(array $validData): ?User

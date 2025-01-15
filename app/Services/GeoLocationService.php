@@ -32,6 +32,6 @@ class GeoLocationService
             FILTER_VALIDATE_IP,
             FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE
         )
-            ? request()->ip() : self::GOOGLE_DNS;
+            ?? self::GOOGLE_DNS;
     }
 }

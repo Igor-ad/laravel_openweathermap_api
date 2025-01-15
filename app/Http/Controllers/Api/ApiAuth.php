@@ -19,10 +19,11 @@ trait ApiAuth
 
     protected function authResponse(?User $user, int $status): JsonResponse
     {
-        return $this->collectionResponse([
-            'user' => $user,
-            'token' => $this->updateToken($user),
-        ],
+        return $this->collectionResponse(
+            [
+                'user' => $user,
+                'token' => $this->updateToken($user),
+            ],
             $status
         );
     }

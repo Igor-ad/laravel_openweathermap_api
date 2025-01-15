@@ -11,8 +11,7 @@ class WeatherDataService
 {
     public function __construct(
         protected CacheRepository $repository
-    )
-    {
+    ) {
     }
 
     public function getForecast(string $city): ?Collection

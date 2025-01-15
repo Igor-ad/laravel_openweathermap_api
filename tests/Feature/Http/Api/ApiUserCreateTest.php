@@ -24,20 +24,23 @@ class ApiUserCreateTest extends TestCase
         $response = $this->post(sprintf(
             '%s?name=%s&email=%s&password=%s&password_confirmation=%s',
             '/api/register/users',
-            $this->name, $this->email, $this->password, $password_confirmation,
+            $this->name,
+            $this->email,
+            $this->password,
+            $password_confirmation,
         ))->assertStatus(Response::HTTP_CREATED);
 
         $this->user = User::where('email', $this->email)->first();
+
 
         $response->assertJson(fn (AssertableJson $json) =>
             $json->where('token', $this->user->getAttribute('api_token'))
                 ->has('user', fn (AssertableJson $json) =>
                 $json->where('id', $this->user->getAttribute('id'))
+                    ->where('name', $this->name)
                     ->where('email', $this->email)
                     ->where('updated_at', (string)$this->user->getAttribute('updated_at'))
-                    ->where('created_at', (string)$this->user->getAttribute('created_at'))
-                )
-            );
+                    ->where('created_at', (string)$this->user->getAttribute('created_at'))));
     }
 
     public function testFailCreateUser(): void
@@ -49,7 +52,10 @@ class ApiUserCreateTest extends TestCase
         $this->post(sprintf(
             '%s?name=%s&email=%s&password=%s&password_confirmation=%s',
             route('api.register', 'users'),
-            $this->name, $this->email, $this->password, $password_confirmation,
+            $this->name,
+            $this->email,
+            $this->password,
+            $password_confirmation,
         ))->assertStatus(Response::HTTP_FOUND);
     }
 }

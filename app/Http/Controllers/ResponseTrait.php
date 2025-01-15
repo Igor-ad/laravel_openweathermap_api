@@ -11,7 +11,8 @@ trait ResponseTrait
 {
     public function collectionResponse(array|Collection $collection, int $status = 200): JsonResponse
     {
-        return response()->json($collection,
+        return response()->json(
+            $collection,
             status: $status,
             options: JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT,
         );

@@ -11,7 +11,7 @@ class WeatherController extends AbstractWeatherController
 {
     public function getWeather(): View
     {
-        $data = json_encode($this->getUserForecast(),JSON_PRETTY_PRINT);
+        $data = json_encode($this->getUserForecast(), JSON_PRETTY_PRINT);
 
         return view('weather.current_forecast', compact('data'));
     }
